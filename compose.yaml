@@ -1,0 +1,37 @@
+# btc-sauron — stack para Portainer (Stacks -> + Add stack -> web editor)
+# Obs.: se usar "build: ." o Portainer precisa acessar esta pasta no host do LXC
+# (ex.: /opt/btc-sauron). Se preferir imagem já carregada, remova a linha
+# "build: ." e ajuste "image:" para o nome da imagem importada.
+#
+# SEGREDOS (token do bot, chat_id) ficam em .env — crie a partir do
+# .env.example (chmod 600). Não coloque o token direto neste arquivo: ele
+# ficaria visível em git/docker inspect/Portainer.
+services:
+  btc-sauron:
+    image: btc-sauron:latest
+    build: .
+    container_name: btc-sauron
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    env_file:
+      - .env
+    environment:
+      - REPORT_TIME=08:00
+      - REPORT_ON_START=true
+      - ALERT_ENABLED=true
+      - ALERT_INTERVAL_SECONDS=600
+      - ALERT_1H_PCT=3.0
+      - ALERT_4H_PCT=5.0
+      - ALERT_24H_PCT=8.0
+      - ALERT_COOLDOWN_HOURS=6.0
+      - STATE_FILE=/data/state.json
+      - LOG_LEVEL=INFO
+      - TZ=America/Sao_Paulo
+    volumes:
+      - btc-sauron-data:/data
+
+volumes:
+  btc-sauron-data:

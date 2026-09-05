@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "btc-sauron"
+version = "2.0.0"
+description = "Telegram reports and alerts for public Bitcoin market data"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+
+[tool.setuptools]
+packages = ["btcsauron"]
